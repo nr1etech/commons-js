@@ -4,6 +4,7 @@ notes.txt
 !jest.config.js
 *.d.ts
 *.d.ts.map
+*.js.map
 node_modules
 dist
 ncryptyr.json
