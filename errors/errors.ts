@@ -138,7 +138,7 @@ export function isInternalServerError(
  * Throws when an internal server error occurs.
  */
 export class InternalServerError extends Error {
-  readonly statusCode = HttpStatusCode.INTERNAL_ERROR;
+  readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
 
   constructor(message?: string) {
     super(message ?? 'Internal server error');

@@ -1,6 +1,10 @@
 import {
+  BadRequestError,
   ForbiddenError,
+  InternalServerError,
+  isBadRequestError,
   isForbiddenError,
+  isInternalServerError,
   isNotFoundError,
   isValidationError,
   NotFoundError,
@@ -29,4 +33,22 @@ test('Test isValidationError', () => {
   expect(isValidationError({})).toBeFalsy();
   expect(isValidationError(new NotFoundError('just a test'))).toBeFalsy();
   expect(isValidationError(new ValidationError('just a test'))).toBeTruthy();
+});
+
+test('Test isBadRequestError', () => {
+  expect(isBadRequestError(undefined)).toBeFalsy();
+  expect(isBadRequestError(null)).toBeFalsy();
+  expect(isBadRequestError({})).toBeFalsy();
+  expect(isBadRequestError(new NotFoundError('just a test'))).toBeFalsy();
+  expect(isBadRequestError(new BadRequestError('just a test'))).toBeTruthy();
+});
+
+test('Test isInternalServerError', () => {
+  expect(isInternalServerError(undefined)).toBeFalsy();
+  expect(isInternalServerError(null)).toBeFalsy();
+  expect(isInternalServerError({})).toBeFalsy();
+  expect(isInternalServerError(new NotFoundError('just a test'))).toBeFalsy();
+  expect(
+    isInternalServerError(new InternalServerError('just a test'))
+  ).toBeTruthy();
 });
