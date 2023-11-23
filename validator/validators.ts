@@ -1,4 +1,4 @@
-import {ValidationError} from './validation-error';
+import {ValidationError} from '../errors';
 
 /**
  * Throws a ValidationError if the value is null or undefined.
