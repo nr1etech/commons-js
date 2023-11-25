@@ -28,7 +28,6 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
  */
 export class NotFoundError extends Error {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
-
   constructor(message?: string) {
     super(message ?? 'Not found');
     this.name = 'NotFoundError';
@@ -56,7 +55,6 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
  */
 export class ForbiddenError extends Error {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
-
   constructor(message?: string) {
     super(message ?? 'Forbidden');
     this.name = 'ForbiddenError';
@@ -83,7 +81,6 @@ export function isValidationError(e?: IError | null): e is ValidationError {
  */
 export class ValidationError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-
   constructor(message?: string) {
     super(message ?? 'Validation error');
     this.name = 'ValidationError';
@@ -110,7 +107,6 @@ export function isBadRequestError(e?: IError | null): e is BadRequestError {
  */
 export class BadRequestError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-
   constructor(message?: string) {
     super(message ?? 'Bad request');
     this.name = 'BadRequestError';
@@ -139,9 +135,62 @@ export function isInternalServerError(
  */
 export class InternalServerError extends Error {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
-
   constructor(message?: string) {
     super(message ?? 'Internal server error');
     this.name = 'InternalServerError';
+  }
+}
+
+/**
+ * Checks if the given parameter is a ConflictError.
+ *
+ * @param e the parameter to check
+ */
+export function isConflictError(e?: IError | null): e is ConflictError {
+  return !!(
+    e &&
+    e.stack &&
+    e.message &&
+    e.statusCode &&
+    e.name === 'ConflictError'
+  );
+}
+
+/**
+ * Thrown when a conflict occurs.
+ */
+export class ConflictError extends Error {
+  readonly statusCode = HttpStatusCode.CONFLICT;
+  constructor(message?: string) {
+    super(message ?? 'Conflict');
+    this.name = 'ConflictError';
+  }
+}
+
+/**
+ * Checks if the given parameter is a UnsupportedMediaTypeError.
+ *
+ * @param e the parameter to check
+ */
+export function isUnsupportedMediaTypeError(
+  e?: IError | null
+): e is UnsupportedMediaTypeError {
+  return !!(
+    e &&
+    e.stack &&
+    e.message &&
+    e.statusCode &&
+    e.name === 'UnsupportedMediaTypeError'
+  );
+}
+
+/**
+ * Thrown when a unsupported media type is used.
+ */
+export class UnsupportedMediaTypeError extends Error {
+  readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
+  constructor(message?: string) {
+    super(message ?? 'Unsupported media type');
+    this.name = 'UnsupportedMediaTypeError';
   }
 }
