@@ -217,6 +217,7 @@ export function isNotImplementedError(
  */
 export class NotImplementedError extends Error {
   readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
+  readonly expose = true;
   constructor(message?: string) {
     super(message ?? 'Not implemented');
     this.name = 'NotImplementedError';
