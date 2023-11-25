@@ -194,3 +194,31 @@ export class UnsupportedMediaTypeError extends Error {
     this.name = 'UnsupportedMediaTypeError';
   }
 }
+
+/**
+ * Checks if the given parameter is a NotImplementedError.
+ *
+ * @param e the parameter to check
+ */
+export function isNotImplementedError(
+  e?: IError | null
+): e is NotImplementedError {
+  return !!(
+    e &&
+    e.stack &&
+    e.message &&
+    e.statusCode &&
+    e.name === 'NotImplementedError'
+  );
+}
+
+/**
+ * Thrown when a requested operation is not implemented.
+ */
+export class NotImplementedError extends Error {
+  readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
+  constructor(message?: string) {
+    super(message ?? 'Not implemented');
+    this.name = 'NotImplementedError';
+  }
+}
