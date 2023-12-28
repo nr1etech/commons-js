@@ -7,13 +7,8 @@ interface IError {
   statusCode?: HttpStatusCode | number;
 }
 
-export interface HttpErrorMessage {
-  message: string;
-}
-
 export interface HttpError extends Error {
   statusCode: HttpStatusCode | number;
-  body: HttpErrorMessage;
 }
 
 /**
@@ -53,11 +48,9 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
  */
 export class NotFoundError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
-  readonly body: HttpErrorMessage;
   constructor(message?: string) {
     message = message ?? 'Not found';
     super(message);
-    this.body = {message};
     this.name = 'NotFoundError';
   }
 }
@@ -81,13 +74,11 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
 /**
  * Thrown when a requested operations is not allowed.
  */
-export class ForbiddenError extends Error {
+export class ForbiddenError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Forbidden';
     super(message);
-    this.body = {message};
     this.name = 'ForbiddenError';
   }
 }
@@ -110,13 +101,11 @@ export function isValidationError(e?: IError | null): e is ValidationError {
 /**
  * Thrown when a validation error occurs.
  */
-export class ValidationError extends Error {
+export class ValidationError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Validation error';
     super(message);
-    this.body = {message};
     this.name = 'ValidationError';
   }
 }
@@ -139,13 +128,11 @@ export function isBadRequestError(e?: IError | null): e is BadRequestError {
 /**
  * Thrown when a bad request is made.
  */
-export class BadRequestError extends Error {
+export class BadRequestError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Bad request';
     super(message ?? 'Bad request');
-    this.body = {message};
     this.name = 'BadRequestError';
   }
 }
@@ -170,13 +157,11 @@ export function isInternalServerError(
 /**
  * Throws when an internal server error occurs.
  */
-export class InternalServerError extends Error {
+export class InternalServerError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Internal server error';
     super(message);
-    this.body = {message};
     this.name = 'InternalServerError';
   }
 }
@@ -199,13 +184,11 @@ export function isConflictError(e?: IError | null): e is ConflictError {
 /**
  * Thrown when a conflict occurs.
  */
-export class ConflictError extends Error {
+export class ConflictError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.CONFLICT;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Conflict';
     super(message);
-    this.body = {message};
     this.name = 'ConflictError';
   }
 }
@@ -230,13 +213,11 @@ export function isUnsupportedMediaTypeError(
 /**
  * Thrown when a unsupported media type is used.
  */
-export class UnsupportedMediaTypeError extends Error {
+export class UnsupportedMediaTypeError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
-  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Unsupported media type';
     super(message);
-    this.body = {message};
     this.name = 'UnsupportedMediaTypeError';
   }
 }
@@ -261,14 +242,12 @@ export function isNotImplementedError(
 /**
  * Thrown when a requested operation is not implemented.
  */
-export class NotImplementedError extends Error {
+export class NotImplementedError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
-  readonly body: HttpErrorMessage | undefined;
   readonly expose = true;
   constructor(message?: string) {
     message = message ?? 'Not implemented';
     super(message);
-    this.body = {message};
     this.name = 'NotImplementedError';
   }
 }
