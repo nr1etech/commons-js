@@ -2,7 +2,6 @@ import {HttpStatusCode} from '../http';
 
 interface IError {
   stack?: string;
-  message?: string;
   name?: string;
   statusCode?: HttpStatusCode | number;
 }
@@ -16,7 +15,6 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
   return !!(
     e &&
     e.stack &&
-    e.message &&
     e.statusCode &&
     e.name &&
     e.name === 'NotFoundError'
@@ -28,8 +26,10 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
  */
 export class NotFoundError extends Error {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Not found');
+    this.body = message;
     this.name = 'NotFoundError';
   }
 }
@@ -43,7 +43,6 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
   return !!(
     e &&
     e.stack &&
-    e.message &&
     e.statusCode &&
     e.name &&
     e.name === 'ForbiddenError'
@@ -55,8 +54,10 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
  */
 export class ForbiddenError extends Error {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Forbidden');
+    this.body = message;
     this.name = 'ForbiddenError';
   }
 }
@@ -67,13 +68,7 @@ export class ForbiddenError extends Error {
  * @param e the variable to check
  */
 export function isValidationError(e?: IError | null): e is ValidationError {
-  return !!(
-    e &&
-    e.stack &&
-    e.message &&
-    e.statusCode &&
-    e.name === 'ValidationError'
-  );
+  return !!(e && e.stack && e.statusCode && e.name === 'ValidationError');
 }
 
 /**
@@ -81,8 +76,10 @@ export function isValidationError(e?: IError | null): e is ValidationError {
  */
 export class ValidationError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Validation error');
+    this.body = message;
     this.name = 'ValidationError';
   }
 }
@@ -93,13 +90,7 @@ export class ValidationError extends Error {
  * @param e the parameter to check
  */
 export function isBadRequestError(e?: IError | null): e is BadRequestError {
-  return !!(
-    e &&
-    e.stack &&
-    e.message &&
-    e.statusCode &&
-    e.name === 'BadRequestError'
-  );
+  return !!(e && e.stack && e.statusCode && e.name === 'BadRequestError');
 }
 
 /**
@@ -107,8 +98,10 @@ export function isBadRequestError(e?: IError | null): e is BadRequestError {
  */
 export class BadRequestError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Bad request');
+    this.body = message;
     this.name = 'BadRequestError';
   }
 }
@@ -121,13 +114,7 @@ export class BadRequestError extends Error {
 export function isInternalServerError(
   e?: IError | null
 ): e is InternalServerError {
-  return !!(
-    e &&
-    e.stack &&
-    e.message &&
-    e.statusCode &&
-    e.name === 'InternalServerError'
-  );
+  return !!(e && e.stack && e.statusCode && e.name === 'InternalServerError');
 }
 
 /**
@@ -135,8 +122,10 @@ export function isInternalServerError(
  */
 export class InternalServerError extends Error {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Internal server error');
+    this.body = message;
     this.name = 'InternalServerError';
   }
 }
@@ -147,13 +136,7 @@ export class InternalServerError extends Error {
  * @param e the parameter to check
  */
 export function isConflictError(e?: IError | null): e is ConflictError {
-  return !!(
-    e &&
-    e.stack &&
-    e.message &&
-    e.statusCode &&
-    e.name === 'ConflictError'
-  );
+  return !!(e && e.stack && e.statusCode && e.name === 'ConflictError');
 }
 
 /**
@@ -161,8 +144,10 @@ export function isConflictError(e?: IError | null): e is ConflictError {
  */
 export class ConflictError extends Error {
   readonly statusCode = HttpStatusCode.CONFLICT;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Conflict');
+    this.body = message;
     this.name = 'ConflictError';
   }
 }
@@ -178,7 +163,6 @@ export function isUnsupportedMediaTypeError(
   return !!(
     e &&
     e.stack &&
-    e.message &&
     e.statusCode &&
     e.name === 'UnsupportedMediaTypeError'
   );
@@ -189,8 +173,10 @@ export function isUnsupportedMediaTypeError(
  */
 export class UnsupportedMediaTypeError extends Error {
   readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
+  readonly body: string | undefined;
   constructor(message?: string) {
     super(message ?? 'Unsupported media type');
+    this.body = message;
     this.name = 'UnsupportedMediaTypeError';
   }
 }
@@ -203,13 +189,7 @@ export class UnsupportedMediaTypeError extends Error {
 export function isNotImplementedError(
   e?: IError | null
 ): e is NotImplementedError {
-  return !!(
-    e &&
-    e.stack &&
-    e.message &&
-    e.statusCode &&
-    e.name === 'NotImplementedError'
-  );
+  return !!(e && e.stack && e.statusCode && e.name === 'NotImplementedError');
 }
 
 /**
@@ -217,9 +197,11 @@ export function isNotImplementedError(
  */
 export class NotImplementedError extends Error {
   readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
+  readonly body: string | undefined;
   readonly expose = true;
   constructor(message?: string) {
     super(message ?? 'Not implemented');
+    this.body = message;
     this.name = 'NotImplementedError';
   }
 }
