@@ -21,8 +21,9 @@ import {
   isNumber,
   isMinValue,
   isMaxValue,
-  isBetweenValues, isValidString
-} from "./validators";
+  isBetweenValues,
+  isValidString,
+} from './validators';
 
 test('Test isNotNull', () => {
   expect(isNotNull('bar')).toBeTruthy();
