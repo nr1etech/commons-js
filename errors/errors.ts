@@ -17,14 +17,7 @@ export interface HttpError extends Error {
  * @param e the parameter to check
  */
 export function isHttpError(e?: IError | null): e is HttpError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name &&
-    e.name === 'HttpError'
-  );
+  return !!(e && e.stack && e.statusCode && e.message && e.name);
 }
 
 /**
