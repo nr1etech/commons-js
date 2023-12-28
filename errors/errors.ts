@@ -3,11 +3,33 @@ import {HttpStatusCode} from '../http';
 interface IError {
   stack?: string;
   name?: string;
+  message?: string;
   statusCode?: HttpStatusCode | number;
 }
 
-export interface ErrorBody {
+export interface HttpErrorMessage {
   message: string;
+}
+
+export interface HttpError extends Error {
+  statusCode: HttpStatusCode | number;
+  body: HttpErrorMessage;
+}
+
+/**
+ * Checks if the given parameter is an HttpError.
+ *
+ * @param e the parameter to check
+ */
+export function isHttpError(e?: IError | null): e is HttpError {
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name &&
+    e.name === 'HttpError'
+  );
 }
 
 /**
@@ -20,6 +42,7 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
     e &&
     e.stack &&
     e.statusCode &&
+    e.message &&
     e.name &&
     e.name === 'NotFoundError'
   );
@@ -28,9 +51,9 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
 /**
  * Thrown when a resource cannot be found.
  */
-export class NotFoundError extends Error {
+export class NotFoundError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage;
   constructor(message?: string) {
     message = message ?? 'Not found';
     super(message);
@@ -49,6 +72,7 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
     e &&
     e.stack &&
     e.statusCode &&
+    e.message &&
     e.name &&
     e.name === 'ForbiddenError'
   );
@@ -59,7 +83,7 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
  */
 export class ForbiddenError extends Error {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Forbidden';
     super(message);
@@ -74,7 +98,13 @@ export class ForbiddenError extends Error {
  * @param e the variable to check
  */
 export function isValidationError(e?: IError | null): e is ValidationError {
-  return !!(e && e.stack && e.statusCode && e.name === 'ValidationError');
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name === 'ValidationError'
+  );
 }
 
 /**
@@ -82,7 +112,7 @@ export function isValidationError(e?: IError | null): e is ValidationError {
  */
 export class ValidationError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Validation error';
     super(message);
@@ -97,7 +127,13 @@ export class ValidationError extends Error {
  * @param e the parameter to check
  */
 export function isBadRequestError(e?: IError | null): e is BadRequestError {
-  return !!(e && e.stack && e.statusCode && e.name === 'BadRequestError');
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name === 'BadRequestError'
+  );
 }
 
 /**
@@ -105,7 +141,7 @@ export function isBadRequestError(e?: IError | null): e is BadRequestError {
  */
 export class BadRequestError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Bad request';
     super(message ?? 'Bad request');
@@ -122,7 +158,13 @@ export class BadRequestError extends Error {
 export function isInternalServerError(
   e?: IError | null
 ): e is InternalServerError {
-  return !!(e && e.stack && e.statusCode && e.name === 'InternalServerError');
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name === 'InternalServerError'
+  );
 }
 
 /**
@@ -130,7 +172,7 @@ export function isInternalServerError(
  */
 export class InternalServerError extends Error {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Internal server error';
     super(message);
@@ -145,7 +187,13 @@ export class InternalServerError extends Error {
  * @param e the parameter to check
  */
 export function isConflictError(e?: IError | null): e is ConflictError {
-  return !!(e && e.stack && e.statusCode && e.name === 'ConflictError');
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name === 'ConflictError'
+  );
 }
 
 /**
@@ -153,7 +201,7 @@ export function isConflictError(e?: IError | null): e is ConflictError {
  */
 export class ConflictError extends Error {
   readonly statusCode = HttpStatusCode.CONFLICT;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Conflict';
     super(message);
@@ -174,6 +222,7 @@ export function isUnsupportedMediaTypeError(
     e &&
     e.stack &&
     e.statusCode &&
+    e.message &&
     e.name === 'UnsupportedMediaTypeError'
   );
 }
@@ -183,7 +232,7 @@ export function isUnsupportedMediaTypeError(
  */
 export class UnsupportedMediaTypeError extends Error {
   readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   constructor(message?: string) {
     message = message ?? 'Unsupported media type';
     super(message);
@@ -200,7 +249,13 @@ export class UnsupportedMediaTypeError extends Error {
 export function isNotImplementedError(
   e?: IError | null
 ): e is NotImplementedError {
-  return !!(e && e.stack && e.statusCode && e.name === 'NotImplementedError');
+  return !!(
+    e &&
+    e.stack &&
+    e.statusCode &&
+    e.message &&
+    e.name === 'NotImplementedError'
+  );
 }
 
 /**
@@ -208,7 +263,7 @@ export function isNotImplementedError(
  */
 export class NotImplementedError extends Error {
   readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
-  readonly body: ErrorBody | undefined;
+  readonly body: HttpErrorMessage | undefined;
   readonly expose = true;
   constructor(message?: string) {
     message = message ?? 'Not implemented';
