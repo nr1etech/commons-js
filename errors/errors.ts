@@ -6,6 +6,10 @@ interface IError {
   statusCode?: HttpStatusCode | number;
 }
 
+function messageToJson(message: string): string {
+  return JSON.stringify({message});
+}
+
 /**
  * Checks if the given parameter is a NotFoundError.
  *
@@ -28,8 +32,9 @@ export class NotFoundError extends Error {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Not found');
-    this.body = message;
+    message = message ?? 'Not found';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'NotFoundError';
   }
 }
@@ -56,8 +61,9 @@ export class ForbiddenError extends Error {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Forbidden');
-    this.body = message;
+    message = message ?? 'Forbidden';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'ForbiddenError';
   }
 }
@@ -78,8 +84,9 @@ export class ValidationError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Validation error');
-    this.body = message;
+    message = message ?? 'Validation error';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'ValidationError';
   }
 }
@@ -100,8 +107,9 @@ export class BadRequestError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
   readonly body: string | undefined;
   constructor(message?: string) {
+    message = message ?? 'Bad request';
     super(message ?? 'Bad request');
-    this.body = message;
+    this.body = messageToJson(message);
     this.name = 'BadRequestError';
   }
 }
@@ -124,8 +132,9 @@ export class InternalServerError extends Error {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Internal server error');
-    this.body = message;
+    message = message ?? 'Internal server error';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'InternalServerError';
   }
 }
@@ -146,8 +155,9 @@ export class ConflictError extends Error {
   readonly statusCode = HttpStatusCode.CONFLICT;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Conflict');
-    this.body = message;
+    message = message ?? 'Conflict';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'ConflictError';
   }
 }
@@ -175,8 +185,9 @@ export class UnsupportedMediaTypeError extends Error {
   readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
   readonly body: string | undefined;
   constructor(message?: string) {
-    super(message ?? 'Unsupported media type');
-    this.body = message;
+    message = message ?? 'Unsupported media type';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'UnsupportedMediaTypeError';
   }
 }
@@ -200,8 +211,9 @@ export class NotImplementedError extends Error {
   readonly body: string | undefined;
   readonly expose = true;
   constructor(message?: string) {
-    super(message ?? 'Not implemented');
-    this.body = message;
+    message = message ?? 'Not implemented';
+    super(message);
+    this.body = messageToJson(message);
     this.name = 'NotImplementedError';
   }
 }
