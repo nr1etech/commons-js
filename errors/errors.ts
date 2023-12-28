@@ -6,8 +6,8 @@ interface IError {
   statusCode?: HttpStatusCode | number;
 }
 
-function messageToJson(message: string): string {
-  return JSON.stringify({message});
+export interface ErrorBody {
+  message: string;
 }
 
 /**
@@ -30,11 +30,11 @@ export function isNotFoundError(e?: IError | null): e is NotFoundError {
  */
 export class NotFoundError extends Error {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Not found';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'NotFoundError';
   }
 }
@@ -59,11 +59,11 @@ export function isForbiddenError(e?: IError | null): e is ForbiddenError {
  */
 export class ForbiddenError extends Error {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Forbidden';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'ForbiddenError';
   }
 }
@@ -82,11 +82,11 @@ export function isValidationError(e?: IError | null): e is ValidationError {
  */
 export class ValidationError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Validation error';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'ValidationError';
   }
 }
@@ -105,11 +105,11 @@ export function isBadRequestError(e?: IError | null): e is BadRequestError {
  */
 export class BadRequestError extends Error {
   readonly statusCode = HttpStatusCode.BAD_REQUEST;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Bad request';
     super(message ?? 'Bad request');
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'BadRequestError';
   }
 }
@@ -130,11 +130,11 @@ export function isInternalServerError(
  */
 export class InternalServerError extends Error {
   readonly statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Internal server error';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'InternalServerError';
   }
 }
@@ -153,11 +153,11 @@ export function isConflictError(e?: IError | null): e is ConflictError {
  */
 export class ConflictError extends Error {
   readonly statusCode = HttpStatusCode.CONFLICT;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Conflict';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'ConflictError';
   }
 }
@@ -183,11 +183,11 @@ export function isUnsupportedMediaTypeError(
  */
 export class UnsupportedMediaTypeError extends Error {
   readonly statusCode = HttpStatusCode.UNSUPPORTED_MEDIA_TYPE;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   constructor(message?: string) {
     message = message ?? 'Unsupported media type';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'UnsupportedMediaTypeError';
   }
 }
@@ -208,12 +208,12 @@ export function isNotImplementedError(
  */
 export class NotImplementedError extends Error {
   readonly statusCode = HttpStatusCode.NOT_IMPLEMENTED;
-  readonly body: string | undefined;
+  readonly body: ErrorBody | undefined;
   readonly expose = true;
   constructor(message?: string) {
     message = message ?? 'Not implemented';
     super(message);
-    this.body = messageToJson(message);
+    this.body = {message};
     this.name = 'NotImplementedError';
   }
 }
