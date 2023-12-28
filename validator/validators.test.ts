@@ -1,8 +1,7 @@
 import {
   betweenValues,
-  isEmail,
-  isNumber,
-  matches,
+  email,
+  number,
   maxLength,
   maxValue,
   minLength,
@@ -10,8 +9,26 @@ import {
   notBlank,
   notEmpty,
   notNull,
-  validateString,
-} from './validators';
+  validString,
+  isNotNull,
+  isNotEmpty,
+  isNotBlank,
+  match,
+  isMatch,
+  isEmail,
+  isMaxLength,
+  isMinLength,
+  isNumber,
+  isMinValue,
+  isMaxValue,
+  isBetweenValues, isValidString
+} from "./validators";
+
+test('Test isNotNull', () => {
+  expect(isNotNull('bar')).toBeTruthy();
+  expect(isNotNull(null)).toBeFalsy();
+  expect(isNotNull(undefined)).toBeFalsy();
+});
 
 test('Test notNull', () => {
   notNull('foo', 'bar');
@@ -23,11 +40,26 @@ test('Test notNull', () => {
   );
 });
 
+test('Test isNotEmpty', () => {
+  expect(isNotEmpty('bar')).toBeTruthy();
+  expect(isNotEmpty('')).toBeFalsy();
+  expect(isNotEmpty(null)).toBeFalsy();
+  expect(isNotEmpty(undefined)).toBeFalsy();
+});
+
 test('Test notEmpty', () => {
   notEmpty('foo', 'bar');
   expect(() => notEmpty('foo', '')).toThrow('foo may not be empty');
   expect(() => notEmpty('foo', null)).toThrow('foo may not be empty');
   expect(() => notEmpty('foo', undefined)).toThrow('foo may not be empty');
+});
+
+test('Test isNotBlank', () => {
+  expect(isNotBlank('bar')).toBeTruthy();
+  expect(isNotBlank(' ')).toBeFalsy();
+  expect(isNotBlank('')).toBeFalsy();
+  expect(isNotBlank(null)).toBeFalsy();
+  expect(isNotBlank(undefined)).toBeFalsy();
 });
 
 test('Test notBlank', () => {
@@ -38,20 +70,45 @@ test('Test notBlank', () => {
   expect(() => notBlank('foo', undefined)).toThrow('foo may not be blank');
 });
 
-test('Test matches', () => {
-  matches('foo', /bar/, 'bar');
-  matches('foo', /bar/, null);
-  matches('foo', /bar/, undefined);
-  expect(() => matches('foo', /bar/, 'baz')).toThrow('foo must match /bar/');
+test('Test isMatch', () => {
+  expect(isMatch(/bar/, 'bar')).toBeTruthy();
+  expect(isMatch(/bar/, null)).toBeTruthy();
+  expect(isMatch(/bar/, undefined)).toBeTruthy();
+  expect(isMatch(/bar/, 'baz')).toBeFalsy();
+});
+
+test('Test match', () => {
+  match('foo', /bar/, 'bar');
+  match('foo', /bar/, null);
+  match('foo', /bar/, undefined);
+  expect(() => match('foo', /bar/, 'baz')).toThrow('foo must match /bar/');
 });
 
 test('Test isEmail', () => {
-  isEmail('foo', 'test@example.com');
-  isEmail('foo', null);
-  isEmail('foo', undefined);
-  expect(() => isEmail('foo', 'test')).toThrow(
+  expect(isEmail('test@example.com')).toBeTruthy();
+  expect(isEmail(null)).toBeTruthy();
+  expect(isEmail(undefined)).toBeTruthy();
+  expect(isEmail('test')).toBeFalsy();
+});
+
+test('Test email', () => {
+  email('foo', 'test@example.com');
+  email('foo', null);
+  email('foo', undefined);
+  expect(() => email('foo', 'test')).toThrow(
     'foo is not a valid email address'
   );
+});
+
+test('Test isMaxLength', () => {
+  const arr: string[] = [];
+  arr.push('a', 'b', 'c');
+  expect(isMaxLength(3, 'bar')).toBeTruthy();
+  expect(isMaxLength(3, null)).toBeTruthy();
+  expect(isMaxLength(3, undefined)).toBeTruthy();
+  expect(isMaxLength(3, arr)).toBeTruthy();
+  expect(isMaxLength(2, 'baz')).toBeFalsy();
+  expect(isMaxLength(2, arr)).toBeFalsy();
 });
 
 test('Test maxLength', () => {
@@ -67,6 +124,17 @@ test('Test maxLength', () => {
   expect(() => maxLength('foo', 2, arr)).toThrow(
     'length of foo may not exceed 2'
   );
+});
+
+test('Test isMinLength', () => {
+  const arr: string[] = [];
+  arr.push('a', 'b', 'c');
+  expect(isMinLength(3, 'bar')).toBeTruthy();
+  expect(isMinLength(3, null)).toBeTruthy();
+  expect(isMinLength(3, undefined)).toBeTruthy();
+  expect(isMinLength(3, arr)).toBeTruthy();
+  expect(isMinLength(4, 'baz')).toBeFalsy();
+  expect(isMinLength(4, arr)).toBeFalsy();
 });
 
 test('Test minLength', () => {
@@ -85,11 +153,27 @@ test('Test minLength', () => {
 });
 
 test('Test isNumber', () => {
-  isNumber('foo', 1);
-  isNumber('foo', '1');
-  isNumber('foo', null);
-  isNumber('foo', undefined);
-  expect(() => isNumber('foo', 'bar')).toThrow('foo is not a number');
+  expect(isNumber(1)).toBeTruthy();
+  expect(isNumber('1')).toBeTruthy();
+  expect(isNumber(null)).toBeTruthy();
+  expect(isNumber(undefined)).toBeTruthy();
+  expect(isNumber('bar')).toBeFalsy();
+});
+
+test('Test number', () => {
+  number('foo', 1);
+  number('foo', '1');
+  number('foo', null);
+  number('foo', undefined);
+  expect(() => number('foo', 'bar')).toThrow('foo is not a number');
+});
+
+test('Test isMinValue', () => {
+  expect(isMinValue(1, 2)).toBeTruthy();
+  expect(isMinValue(1, '2')).toBeTruthy();
+  expect(isMinValue(1, null)).toBeTruthy();
+  expect(isMinValue(1, undefined)).toBeTruthy();
+  expect(isMinValue(2, 1)).toBeFalsy();
 });
 
 test('Test minValue', () => {
@@ -100,12 +184,28 @@ test('Test minValue', () => {
   expect(() => minValue('foo', 2, 1)).toThrow('foo may not be less than 2');
 });
 
+test('Test isMaxValue', () => {
+  expect(isMaxValue(2, 1)).toBeTruthy();
+  expect(isMaxValue(2, '1')).toBeTruthy();
+  expect(isMaxValue(2, null)).toBeTruthy();
+  expect(isMaxValue(2, undefined)).toBeTruthy();
+  expect(isMaxValue(1, 2)).toBeFalsy();
+});
+
 test('Test maxValue', () => {
   maxValue('foo', 2, 1);
   maxValue('foo', 2, '1');
   maxValue('foo', 2, null);
   maxValue('foo', 2, undefined);
   expect(() => maxValue('foo', 1, 2)).toThrow('foo may not be greater than 1');
+});
+
+test('Test isBetweenValues', () => {
+  expect(isBetweenValues(1, 3, 2)).toBeTruthy();
+  expect(isBetweenValues(1, 3, '2')).toBeTruthy();
+  expect(isBetweenValues(1, 3, null)).toBeTruthy();
+  expect(isBetweenValues(1, 3, undefined)).toBeTruthy();
+  expect(isBetweenValues(1, 3, 4)).toBeFalsy();
 });
 
 test('Test betweenValues', () => {
@@ -118,16 +218,26 @@ test('Test betweenValues', () => {
   );
 });
 
-test('Test validateString', () => {
-  validateString({name: 'foo', required: true}, 'bar');
-  validateString({name: 'foo', required: true}, ' ');
-  validateString({name: 'foo', required: true}, '');
-  validateString({name: 'foo', required: false}, null);
-  validateString({name: 'foo', required: false}, undefined);
-  expect(() => validateString({name: 'foo', required: true}, null)).toThrow(
+test('Test isValidString', () => {
+  expect(isValidString({required: true}, 'bar')).toBeTruthy();
+  expect(isValidString({required: true}, ' ')).toBeTruthy();
+  expect(isValidString({required: true}, '')).toBeTruthy();
+  expect(isValidString({required: false}, null)).toBeTruthy();
+  expect(isValidString({required: false}, undefined)).toBeTruthy();
+  expect(isValidString({required: true}, null)).toBeFalsy();
+  expect(isValidString({required: true}, undefined)).toBeFalsy();
+});
+
+test('Test validString', () => {
+  validString('foo', {required: true}, 'bar');
+  validString('foo', {required: true}, ' ');
+  validString('foo', {required: true}, '');
+  validString('foo', {required: false}, null);
+  validString('foo', {required: false}, undefined);
+  expect(() => validString('foo', {required: true}, null)).toThrow(
     'foo may not be null or undefined'
   );
-  expect(() =>
-    validateString({name: 'foo', required: true}, undefined)
-  ).toThrow('foo may not be null or undefined');
+  expect(() => validString('foo', {required: true}, undefined)).toThrow(
+    'foo may not be null or undefined'
+  );
 });

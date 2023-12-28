@@ -1,6 +1,15 @@
 import {ValidationError} from '../errors';
 
 /**
+ * Tests if a value is null or undefined.
+ *
+ * @param o the value to check
+ */
+export function isNotNull(o?: unknown): o is NonNullable<unknown> {
+  return o !== undefined && o !== null;
+}
+
+/**
  * Throws a ValidationError if the value is null or undefined.
  * This function also asserts the value to be NonNullable if the check passes.
  *
@@ -11,9 +20,18 @@ export function notNull(
   name: string,
   o?: unknown
 ): asserts o is NonNullable<unknown> {
-  if (o === undefined || o === null) {
+  if (!isNotNull(o)) {
     throw new ValidationError(`${name} may not be null or undefined`);
   }
+}
+
+/**
+ * Tests if a value is empty, null, undefined or has a length of 0.
+ *
+ * @param o the value to check
+ */
+export function isNotEmpty(o?: unknown): o is NonNullable<unknown> {
+  return !(o === undefined || o === null || o.toString().length === 0);
 }
 
 /**
@@ -27,9 +45,18 @@ export function notEmpty(
   name: string,
   o?: unknown
 ): asserts o is NonNullable<unknown> {
-  if (o === undefined || o === null || o.toString().length === 0) {
+  if (!isNotEmpty(o)) {
     throw new ValidationError(`${name} may not be empty`);
   }
+}
+
+/**
+ * Tests if a value is null, undefined, has a length of 0 or contains only whitespace.
+ *
+ * @param o the value to check
+ */
+export function isNotBlank(o?: unknown): o is NonNullable<unknown> {
+  return !(o === undefined || o === null || o.toString().trim().length === 0);
 }
 
 /**
@@ -43,23 +70,49 @@ export function notBlank(
   name: string,
   o?: unknown
 ): asserts o is NonNullable<unknown> {
-  if (o === undefined || o === null || o.toString().trim().length === 0) {
+  if (!isNotBlank(o)) {
     throw new ValidationError(`${name} may not be blank`);
   }
 }
 
 /**
- * Throws a ValidationError if the value does not match the regular expression provided.
+ * Tests if a value does not match the regular expression provided.
+ * Undefined and null values are skipped and not tested.
+ *
+ * @param regex the regular expression to test with
+ * @param o the value to check
+ */
+export function isMatch(regex: RegExp, o?: string | null): o is string {
+  if (o === undefined || o === null) {
+    return true;
+  }
+  return o.match(regex) !== null;
+}
+
+/**
+ * Throws a ValidationError if the value matches the regular expression provided.
  * Undefined and null values are skipped and not validated.
  *
  * @param name the name of the variable
  * @param regex the regular expression to validate with
  * @param o the value to check
  */
-export function matches(name: string, regex: RegExp, o?: string | null) {
-  if (o !== undefined && o !== null && !o.match(regex)) {
+export function match(name: string, regex: RegExp, o?: string | null) {
+  if (!isMatch(regex, o)) {
     throw new ValidationError(`${name} must match ${regex}`);
   }
+}
+
+/**
+ * Tests if a value is a valid email address.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param o the value to check
+ */
+export function isEmail(o?: string | null): o is string {
+  const expression =
+    /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+  return !(o !== undefined && o !== null && !expression.test(o));
 }
 
 /**
@@ -69,12 +122,21 @@ export function matches(name: string, regex: RegExp, o?: string | null) {
  * @param name the name of the variable
  * @param o the value to check
  */
-export function isEmail(name: string, o?: string | null) {
-  const expression =
-    /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
-  if (o !== undefined && o !== null && !expression.test(o)) {
+export function email(name: string, o?: string | null) {
+  if (!isEmail(o)) {
     throw new ValidationError(`${name} is not a valid email address`);
   }
+}
+
+/**
+ * Tests if a value has a length that is less than the provided length.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param length the maximum length of the variable
+ * @param o the value to check
+ */
+export function isMaxLength(length: number, o?: string | unknown[] | null) {
+  return !(o !== undefined && o !== null && o.length > length);
 }
 
 /**
@@ -90,9 +152,20 @@ export function maxLength(
   length: number,
   o?: string | unknown[] | null
 ) {
-  if (o !== undefined && o !== null && o.length > length) {
+  if (!isMaxLength(length, o)) {
     throw new ValidationError(`length of ${name} may not exceed ${length}`);
   }
+}
+
+/**
+ * Tests if a value has a length that is greater than the provided length.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param length the minimum length of the variable
+ * @param o the value to check
+ */
+export function isMinLength(length: number, o?: string | unknown[] | null) {
+  return !(o !== undefined && o !== null && o.length < length);
 }
 
 /**
@@ -108,11 +181,21 @@ export function minLength(
   length: number,
   o?: string | unknown[] | null
 ) {
-  if (o !== undefined && o !== null && o.length < length) {
+  if (!isMinLength(length, o)) {
     throw new ValidationError(
       `length of ${name} may not be less than ${length}`
     );
   }
+}
+
+/**
+ * Tests if a value provided is a number.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param o the value to check
+ */
+export function isNumber(o?: string | null | number): boolean {
+  return o === undefined || o === null || !isNaN(+o);
 }
 
 /**
@@ -122,10 +205,21 @@ export function minLength(
  * @param name the name of the variable
  * @param o the value to check
  */
-export function isNumber(name: string, o?: string | null | number) {
-  if (o !== undefined && o !== null && isNaN(Number(o))) {
+export function number(name: string, o?: string | null | number) {
+  if (!isNumber(o)) {
     throw new ValidationError(`${name} is not a number`);
   }
+}
+
+/**
+ * Tests if a value is less than the provided minimum value.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param minValue the minimum value allowed
+ * @param o the value to check
+ */
+export function isMinValue(minValue: number, o?: string | number | null) {
+  return o === undefined || o === null || +o >= minValue;
 }
 
 /**
@@ -141,14 +235,23 @@ export function minValue(
   minValue: number,
   o?: number | string | null
 ) {
-  if (o !== undefined && o !== null) {
-    if (typeof o === 'string') {
-      isNumber(name, o);
-    }
-    if (+o < minValue) {
-      throw new ValidationError(`${name} may not be less than ${minValue}`);
-    }
+  if (!isMinValue(minValue, o)) {
+    throw new ValidationError(`${name} may not be less than ${minValue}`);
   }
+}
+
+/**
+ * Tests if a value is more than the provided maximum value.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param maxValue the maximum value allowed
+ * @param o the value to check
+ */
+export function isMaxValue(
+  maxValue: number,
+  o?: string | number | null
+): boolean {
+  return !(o !== undefined && o !== null && +o > maxValue);
 }
 
 /**
@@ -164,14 +267,25 @@ export function maxValue(
   maxValue: number,
   o?: number | string | null
 ) {
-  if (o !== undefined && o !== null) {
-    if (typeof o === 'string') {
-      isNumber(name, o);
-    }
-    if (+o > maxValue) {
-      throw new ValidationError(`${name} may not be greater than ${maxValue}`);
-    }
+  if (!isMaxValue(maxValue, o)) {
+    throw new ValidationError(`${name} may not be greater than ${maxValue}`);
   }
+}
+
+/**
+ * Tests if the value is between the provided minimum and maximum values inclusive.
+ * Undefined and null values are skipped and not validated.
+ *
+ * @param minValue the minimum value allowed
+ * @param maxValue the maximum value allowed
+ * @param o the value to check
+ */
+export function isBetweenValues(
+  minValue: number,
+  maxValue: number,
+  o?: string | number | null
+): boolean {
+  return !(o !== undefined && o !== null && (+o < minValue || +o > maxValue));
 }
 
 /**
@@ -189,67 +303,82 @@ export function betweenValues(
   maxValue: number,
   o?: string | number | null
 ) {
-  if (o !== undefined && o !== null) {
-    if (typeof o === 'string') {
-      isNumber(name, o);
-    }
-    if (+o < minValue || +o > maxValue) {
-      throw new ValidationError(
-        `${name} must be between ${minValue} and ${maxValue}`
-      );
-    }
+  if (!isBetweenValues(minValue, maxValue, o)) {
+    throw new ValidationError(
+      `${name} must be between ${minValue} and ${maxValue}`
+    );
   }
 }
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 
 export interface StringValidationOptions {
-  readonly name: string;
   readonly required: boolean;
   readonly minLength?: number;
   readonly maxLength?: number;
   readonly regex?: RegExp;
   readonly notBlank?: boolean;
   readonly notEmpty?: boolean;
-  readonly isEmail?: boolean;
-  readonly isNumber?: boolean;
+  readonly email?: boolean;
+  readonly number?: boolean;
 }
 
-export function validateString(
+export function isValidString(
+  options: StringValidationOptions,
+  value?: unknown
+): value is string {
+  if (options.required) {
+    if (!isNotNull(value)) {
+      return false;
+    }
+  } else if (value === undefined || value === null) {
+    return true;
+  }
+  if (!isString(value)) {
+    return false;
+  }
+  if (options.minLength && !isMinLength(options.minLength, value)) {
+    return false;
+  }
+  if (options.maxLength && !isMaxLength(options.maxLength, value)) {
+    return false;
+  }
+  if (options.regex && !isMatch(options.regex, value)) {
+    return false;
+  }
+  if (options.notBlank && !isNotBlank(value)) {
+    return false;
+  }
+  if (options.notEmpty && !isNotEmpty(value)) {
+    return false;
+  }
+  if (options.email && !isEmail(value)) {
+    return false;
+  }
+  if (options.number && !isNumber(value)) {
+    return false;
+  }
+  return true;
+}
+
+export function validString(
+  name: string,
   options: StringValidationOptions,
   value?: unknown
 ): void {
   if (options.required) {
-    notNull(options.name, value);
+    notNull(name, value);
   } else if (value === undefined || value === null) {
     return;
   }
   if (!isString(value)) {
-    throw new ValidationError(`${options.name} must be a string`);
+    throw new ValidationError(`${name} must be a string`);
   }
-  if (options.minLength !== undefined && value.length < options.minLength) {
-    throw new ValidationError(
-      `${options.name} must be at least ${options.minLength} characters`
-    );
-  }
-  if (options.maxLength !== undefined && value.length > options.maxLength) {
-    throw new ValidationError(
-      `${options.name} must be at most ${options.maxLength} characters`
-    );
-  }
-  if (options.regex !== undefined && !options.regex.test(value)) {
-    throw new ValidationError(`${options.name} must match ${options.regex}`);
-  }
-  if (options.notBlank !== undefined && options.notBlank) {
-    notBlank(options.name, value);
-  }
-  if (options.notEmpty !== undefined && options.notEmpty) {
-    notEmpty(options.name, value);
-  }
-  if (options.isEmail !== undefined && options.isEmail) {
-    isEmail(options.name, value);
-  }
-  if (options.isNumber !== undefined && options.isNumber) {
-    isNumber(options.name, value);
-  }
+  options.minLength && minLength(name, options.minLength, value);
+  options.maxLength && maxLength(name, options.maxLength, value);
+  options.regex && match(name, options.regex, value);
+  options.notBlank && notBlank(name, value);
+  options.notEmpty && notEmpty(name, value);
+  options.email && email(name, value);
+  options.number && number(name, value);
 }
