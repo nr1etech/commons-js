@@ -21,16 +21,12 @@
   ],
   "scripts": {
     "build": "tsc",
+    "postbuild": "prettier --check . && gts lint",
     "watch": "tsc -w",
     "test": "jest",
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "pnpm run compile",
-    "pretest": "pnpm run compile",
-    "posttest": "pnpm run lint",
-    "check": "prettier --check .",
     "makepretty": "prettier --write ."
   },
   "devDependencies": {
