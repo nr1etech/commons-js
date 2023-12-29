@@ -244,3 +244,27 @@ export class NotImplementedError extends Error implements HttpError {
     this.name = 'NotImplementedError';
   }
 }
+
+export function toError(
+  code: number | HttpStatusCode,
+  message?: string
+): Error {
+  switch (code) {
+    case HttpStatusCode.NOT_FOUND:
+      return new NotFoundError(message);
+    case HttpStatusCode.FORBIDDEN:
+      return new ForbiddenError(message);
+    case HttpStatusCode.BAD_REQUEST:
+      return new BadRequestError(message);
+    case HttpStatusCode.INTERNAL_SERVER_ERROR:
+      return new InternalServerError(message);
+    case HttpStatusCode.CONFLICT:
+      return new ConflictError(message);
+    case HttpStatusCode.UNSUPPORTED_MEDIA_TYPE:
+      return new UnsupportedMediaTypeError(message);
+    case HttpStatusCode.NOT_IMPLEMENTED:
+      return new NotImplementedError(message);
+    default:
+      return new Error(message);
+  }
+}
