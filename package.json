@@ -44,6 +44,7 @@
     "./package.json": "./package.json",
     "./http": "./http/index.js",
     "./errors": "./errors/index.js",
-    "./validator": "./validator/index.js"
+    "./validator": "./validator/index.js",
+    "./lang": "./lang/index.js"
   }
 }
