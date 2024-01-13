@@ -13,19 +13,10 @@ export interface HttpError extends Error {
 /**
  * Checks if the given parameter is an HttpError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
 export function isHttpError(e?: unknown): e is HttpError {
   return isObject(e) && !!(e && e.stack && e.statusCode && e.message && e.name);
-}
-
-/**
- * Checks if the given parameter is a NotFoundError.
- *
- * @param e the parameter to check
- */
-export function isNotFoundError(e?: unknown): e is NotFoundError {
-  return isHttpError(e) && e.name === 'NotFoundError';
 }
 
 /**
@@ -41,16 +32,37 @@ export class NotFoundError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a ForbiddenError.
+ * Checks if the given parameter is a NotFoundError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isForbiddenError(e?: unknown): e is ForbiddenError {
-  return isHttpError(e) && e.name === 'ForbiddenError';
+export function isNotFoundError(e?: unknown): e is NotFoundError {
+  return isHttpError(e) && e.name === 'NotFoundError';
 }
 
 /**
- * Thrown when a requested operations is not allowed.
+ * Thrown when a request is missing authentication credentials.
+ */
+export class UnauthorizedError extends Error implements HttpError {
+  readonly statusCode = HttpStatusCode.UNAUTHORIZED;
+  constructor(message?: string) {
+    message = message ?? 'Unauthorized';
+    super(message);
+    this.name = 'UnauthorizedError';
+  }
+}
+
+/**
+ * Checks if the given parameter is a UnauthorizedError.
+ *
+ * @param e The parameter to check
+ */
+export function isUnauthorizedError(e?: unknown): e is UnauthorizedError {
+  return isHttpError(e) && e.name === 'UnauthorizedError';
+}
+
+/**
+ * Thrown when credentials are present, but the requested operations is not allowed.
  */
 export class ForbiddenError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.FORBIDDEN;
@@ -62,12 +74,12 @@ export class ForbiddenError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given variable is a ValidationError.
+ * Checks if the given parameter is a ForbiddenError.
  *
- * @param e the variable to check
+ * @param e The parameter to check
  */
-export function isValidationError(e?: unknown): e is ValidationError {
-  return isHttpError(e) && e.name === 'ValidationError';
+export function isForbiddenError(e?: unknown): e is ForbiddenError {
+  return isHttpError(e) && e.name === 'ForbiddenError';
 }
 
 /**
@@ -83,12 +95,12 @@ export class ValidationError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a BadRequestError.
+ * Checks if the given variable is a ValidationError.
  *
- * @param e the parameter to check
+ * @param e The variable to check
  */
-export function isBadRequestError(e?: unknown): e is BadRequestError {
-  return isHttpError(e) && e.name === 'BadRequestError';
+export function isValidationError(e?: unknown): e is ValidationError {
+  return isHttpError(e) && e.name === 'ValidationError';
 }
 
 /**
@@ -104,12 +116,12 @@ export class BadRequestError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a InternalServerError.
+ * Checks if the given parameter is a BadRequestError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isInternalServerError(e?: unknown): e is InternalServerError {
-  return isHttpError(e) && e.name === 'InternalServerError';
+export function isBadRequestError(e?: unknown): e is BadRequestError {
+  return isHttpError(e) && e.name === 'BadRequestError';
 }
 
 /**
@@ -125,12 +137,12 @@ export class InternalServerError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a ConflictError.
+ * Checks if the given parameter is a InternalServerError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isConflictError(e?: unknown): e is ConflictError {
-  return isHttpError(e) && e.name === 'ConflictError';
+export function isInternalServerError(e?: unknown): e is InternalServerError {
+  return isHttpError(e) && e.name === 'InternalServerError';
 }
 
 /**
@@ -146,14 +158,12 @@ export class ConflictError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a UnsupportedMediaTypeError.
+ * Checks if the given parameter is a ConflictError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isUnsupportedMediaTypeError(
-  e?: unknown
-): e is UnsupportedMediaTypeError {
-  return isHttpError(e) && e.name === 'UnsupportedMediaTypeError';
+export function isConflictError(e?: unknown): e is ConflictError {
+  return isHttpError(e) && e.name === 'ConflictError';
 }
 
 /**
@@ -169,12 +179,14 @@ export class UnsupportedMediaTypeError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a NotImplementedError.
+ * Checks if the given parameter is a UnsupportedMediaTypeError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isNotImplementedError(e?: unknown): e is NotImplementedError {
-  return isHttpError(e) && e.name === 'NotImplementedError';
+export function isUnsupportedMediaTypeError(
+  e?: unknown
+): e is UnsupportedMediaTypeError {
+  return isHttpError(e) && e.name === 'UnsupportedMediaTypeError';
 }
 
 /**
@@ -191,12 +203,12 @@ export class NotImplementedError extends Error implements HttpError {
 }
 
 /**
- * Checks if the given parameter is a IllegalArgumentError.
+ * Checks if the given parameter is a NotImplementedError.
  *
- * @param e the parameter to check
+ * @param e The parameter to check
  */
-export function isIllegalArgumentError(e?: unknown): e is IllegalArgumentError {
-  return isError(e) && e.name === 'IllegalArgumentError';
+export function isNotImplementedError(e?: unknown): e is NotImplementedError {
+  return isHttpError(e) && e.name === 'NotImplementedError';
 }
 
 /**
@@ -210,6 +222,15 @@ export class IllegalArgumentError extends Error {
     this.argName = argName;
     this.name = 'IllegalArgumentError';
   }
+}
+
+/**
+ * Checks if the given parameter is a IllegalArgumentError.
+ *
+ * @param e The parameter to check
+ */
+export function isIllegalArgumentError(e?: unknown): e is IllegalArgumentError {
+  return isError(e) && e.name === 'IllegalArgumentError';
 }
 
 /**
