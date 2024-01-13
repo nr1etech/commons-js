@@ -1,12 +1,5 @@
 import {HttpStatusCode} from '../http';
-
-interface IError {
-  stack?: string;
-  name?: string;
-  argName?: string;
-  message?: string;
-  statusCode?: HttpStatusCode | number;
-}
+import {isError, isObject} from '../lang';
 
 /**
  * An extended version of Error that includes an HttpStatusCode.
@@ -21,8 +14,8 @@ export interface HttpError extends Error {
  *
  * @param e the parameter to check
  */
-export function isHttpError(e?: IError | null): e is HttpError {
-  return !!(e && e.stack && e.statusCode && e.message && e.name);
+export function isHttpError(e?: unknown): e is HttpError {
+  return isObject(e) && !!(e && e.stack && e.statusCode && e.message && e.name);
 }
 
 /**
@@ -30,15 +23,8 @@ export function isHttpError(e?: IError | null): e is HttpError {
  *
  * @param e the parameter to check
  */
-export function isNotFoundError(e?: IError | null): e is NotFoundError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name &&
-    e.name === 'NotFoundError'
-  );
+export function isNotFoundError(e?: unknown): e is NotFoundError {
+  return isHttpError(e) && e.name === 'NotFoundError';
 }
 
 /**
@@ -58,15 +44,8 @@ export class NotFoundError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isForbiddenError(e?: IError | null): e is ForbiddenError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name &&
-    e.name === 'ForbiddenError'
-  );
+export function isForbiddenError(e?: unknown): e is ForbiddenError {
+  return isHttpError(e) && e.name === 'ForbiddenError';
 }
 
 /**
@@ -86,14 +65,8 @@ export class ForbiddenError extends Error implements HttpError {
  *
  * @param e the variable to check
  */
-export function isValidationError(e?: IError | null): e is ValidationError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'ValidationError'
-  );
+export function isValidationError(e?: unknown): e is ValidationError {
+  return isHttpError(e) && e.name === 'ValidationError';
 }
 
 /**
@@ -113,14 +86,8 @@ export class ValidationError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isBadRequestError(e?: IError | null): e is BadRequestError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'BadRequestError'
-  );
+export function isBadRequestError(e?: unknown): e is BadRequestError {
+  return isHttpError(e) && e.name === 'BadRequestError';
 }
 
 /**
@@ -140,16 +107,8 @@ export class BadRequestError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isInternalServerError(
-  e?: IError | null
-): e is InternalServerError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'InternalServerError'
-  );
+export function isInternalServerError(e?: unknown): e is InternalServerError {
+  return isHttpError(e) && e.name === 'InternalServerError';
 }
 
 /**
@@ -169,14 +128,8 @@ export class InternalServerError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isConflictError(e?: IError | null): e is ConflictError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'ConflictError'
-  );
+export function isConflictError(e?: unknown): e is ConflictError {
+  return isHttpError(e) && e.name === 'ConflictError';
 }
 
 /**
@@ -197,15 +150,9 @@ export class ConflictError extends Error implements HttpError {
  * @param e the parameter to check
  */
 export function isUnsupportedMediaTypeError(
-  e?: IError | null
+  e?: unknown
 ): e is UnsupportedMediaTypeError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'UnsupportedMediaTypeError'
-  );
+  return isHttpError(e) && e.name === 'UnsupportedMediaTypeError';
 }
 
 /**
@@ -225,16 +172,8 @@ export class UnsupportedMediaTypeError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isNotImplementedError(
-  e?: IError | null
-): e is NotImplementedError {
-  return !!(
-    e &&
-    e.stack &&
-    e.statusCode &&
-    e.message &&
-    e.name === 'NotImplementedError'
-  );
+export function isNotImplementedError(e?: unknown): e is NotImplementedError {
+  return isHttpError(e) && e.name === 'NotImplementedError';
 }
 
 /**
@@ -255,16 +194,8 @@ export class NotImplementedError extends Error implements HttpError {
  *
  * @param e the parameter to check
  */
-export function isIllegalArgumentError(
-  e?: IError | null
-): e is IllegalArgumentError {
-  return !!(
-    e &&
-    e.stack &&
-    e.argName &&
-    e.message &&
-    e.name === 'IllegalArgumentError'
-  );
+export function isIllegalArgumentError(e?: unknown): e is IllegalArgumentError {
+  return isError(e) && e.name === 'IllegalArgumentError';
 }
 
 /**
@@ -280,6 +211,12 @@ export class IllegalArgumentError extends Error {
   }
 }
 
+/**
+ * Converts the given parameter to an HttpError.
+ *
+ * @param code The HTTP status code
+ * @param message The error message
+ */
 export function toError(
   code: number | HttpStatusCode,
   message?: string
