@@ -45,6 +45,7 @@
     "./http": "./http/index.js",
     "./errors": "./errors/index.js",
     "./validator": "./validator/index.js",
-    "./lang": "./lang/index.js"
+    "./lang": "./lang/index.js",
+    "./bitsnbytes": "./bitsnbytes/index.js"
   }
 }

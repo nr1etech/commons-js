@@ -3,10 +3,15 @@ import {HttpStatusCode} from '../http';
 interface IError {
   stack?: string;
   name?: string;
+  argName?: string;
   message?: string;
   statusCode?: HttpStatusCode | number;
 }
 
+/**
+ * An extended version of Error that includes an HttpStatusCode.
+ * This can be useful in middleware error handlers to determine http status codes to return to the client.
+ */
 export interface HttpError extends Error {
   statusCode: HttpStatusCode | number;
 }
@@ -242,6 +247,36 @@ export class NotImplementedError extends Error implements HttpError {
     message = message ?? 'Not implemented';
     super(message);
     this.name = 'NotImplementedError';
+  }
+}
+
+/**
+ * Checks if the given parameter is a IllegalArgumentError.
+ *
+ * @param e the parameter to check
+ */
+export function isIllegalArgumentError(
+  e?: IError | null
+): e is IllegalArgumentError {
+  return !!(
+    e &&
+    e.stack &&
+    e.argName &&
+    e.message &&
+    e.name === 'IllegalArgumentError'
+  );
+}
+
+/**
+ * Thrown when an illegal argument is passed to a function.
+ */
+export class IllegalArgumentError extends Error {
+  readonly argName: string;
+  constructor(argName: string, message?: string) {
+    message = message ?? `Illegal argument ${argName}`;
+    super(message);
+    this.argName = argName;
+    this.name = 'IllegalArgumentError';
   }
 }
 
