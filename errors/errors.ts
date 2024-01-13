@@ -1,5 +1,14 @@
 import {HttpStatusCode} from '../http';
-import {isError, isObject} from '../lang';
+import {isObject} from '../lang';
+
+/**
+ * Checks if the given parameter is an Error.
+ *
+ * @param item the parameter to check
+ */
+export function isError(item: unknown): item is Error {
+  return item instanceof Error;
+}
 
 /**
  * An extended version of Error that includes an HttpStatusCode.
