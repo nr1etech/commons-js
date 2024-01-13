@@ -41,11 +41,11 @@
   },
   "exports": {
     ".": "./index.js",
-    "./package.json": "./package.json",
-    "./http": "./http/index.js",
+    "./bitsnbytes": "./bitsnbytes/index.js",
     "./errors": "./errors/index.js",
-    "./validator": "./validator/index.js",
+    "./http": "./http/index.js",
     "./lang": "./lang/index.js",
-    "./bitsnbytes": "./bitsnbytes/index.js"
+    "./package.json": "./package.json",
+    "./validator": "./validator/index.js"
   }
 }
