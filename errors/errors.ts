@@ -7,6 +7,9 @@ export {isError} from '../lang';
  * This can be useful in middleware error handlers to determine http status codes to return to the client.
  */
 export interface HttpError extends Error {
+  /**
+   * The HTTP status code.
+   */
   statusCode: HttpStatusCode | number;
 }
 
@@ -24,10 +27,15 @@ export function isHttpError(e?: unknown): e is HttpError {
  */
 export class NotFoundError extends Error implements HttpError {
   readonly statusCode = HttpStatusCode.NOT_FOUND;
-  constructor(message?: string) {
+  /**
+   * The max-age value to set in the Cache-Control header if used in a middleware.
+   */
+  readonly maxAge?: number;
+  constructor(message?: string, maxAge?: number) {
     message = message ?? 'Not found';
     super(message);
     this.name = 'NotFoundError';
+    this.maxAge = maxAge;
   }
 }
 
