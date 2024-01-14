@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/nr1etech/commons-js.git"
   },
+  "bugs": {
+    "url": "https://github.com/nr1etech/commons-js/issues"
+  },
+  "homepage": "https://github.com/nr1etech/commons-js#readme",
   "files": [
     "/**/*.d.ts",
     "/**/*.js",
