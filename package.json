@@ -1,7 +1,7 @@
 {
   "name": "@nr1e/commons",
   "description": "Provides common patterns for validation",
-  "version": "0.0.3-alpha.10",
+  "version": "0.0.3-alpha.11",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
