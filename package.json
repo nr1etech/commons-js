@@ -43,12 +43,21 @@
     "typescript": "~5.1.6"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./bitsnbytes": "./dist/bitsnbytes/index.js",
-    "./errors": "./dist/errors/index.js",
-    "./http": "./dist/http/index.js",
-    "./lang": "./dist/lang/index.js",
+    "./bitsnbytes": {
+      "import": "./dist/bitsnbytes/index.js"
+    },
+    "./errors": {
+      "import": "./dist/errors/index.js"
+    },
+    "./http": {
+      "import": "./dist/http/index.js"
+    },
+    "./lang": {
+      "import": "./dist/lang/index.js"
+    },
     "./package.json": "./package.json",
-    "./validator": "./dist/validator/index.js"
+    "./validator": {
+      "import": "./dist/validator/index.js"
+    }
   }
 }
