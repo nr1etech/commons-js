@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "postbuild": "prettier --check . && gts lint",
+    "postbuild": "prettier --check . && gts lint && cp package.json dist",
     "watch": "tsc -w",
     "test": "vitest run",
     "lint": "gts lint",
@@ -43,20 +43,20 @@
   },
   "exports": {
     "./bitsnbytes": {
-      "import": "./dist/bitsnbytes/index.js"
+      "import": "./bitsnbytes/index.js"
     },
     "./errors": {
-      "import": "./dist/errors/index.js"
+      "import": "./errors/index.js"
     },
     "./http": {
-      "import": "./dist/http/index.js"
+      "import": "./http/index.js"
     },
     "./lang": {
-      "import": "./dist/lang/index.js"
+      "import": "./lang/index.js"
     },
     "./package.json": "./package.json",
     "./validator": {
-      "import": "./dist/validator/index.js"
+      "import": "./validator/index.js"
     }
   }
 }
