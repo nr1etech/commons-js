@@ -4,7 +4,7 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "module": "ES2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
