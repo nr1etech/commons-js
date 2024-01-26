@@ -25,10 +25,10 @@
     "watch": "tsc -w",
     "test": "vitest run",
     "lint": "gts lint",
-    "clean": "find . -depth 1 \\( -name '*.js' -o -name '*.d.ts' -o -name '*.map' \\) ! -name '.*' ! -name 'jest.config.js' -delete",
+    "clean": "rm -rf dist && rm -rf site",
     "fix": "gts fix",
     "makepretty": "prettier --write .",
-    "site": "typedoc --out site index.ts"
+    "site": "typedoc --out site \"src/**/*.ts\" --exclude \"src/**/*.test.ts\""
   },
   "devDependencies": {
     "@types/node": "20.8.2",
