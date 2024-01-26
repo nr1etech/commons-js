@@ -3,8 +3,6 @@
   "description": "Provides common patterns for validation",
   "version": "0.0.3-alpha.15",
   "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "author": "NR1E, Inc.",
   "publishConfig": {
     "access": "public"
@@ -19,8 +17,7 @@
   },
   "homepage": "https://github.com/nr1etech/commons-js#readme",
   "files": [
-    "dist/",
-    "!dist/**/*.test.*"
+    "**"
   ],
   "scripts": {
     "build": "tsc",
