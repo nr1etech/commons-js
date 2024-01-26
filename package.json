@@ -2,6 +2,7 @@
   "name": "@nr1e/commons",
   "description": "Provides common patterns for validation",
   "version": "0.0.3-alpha.8",
+  "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "NR1E, Inc.",
@@ -44,12 +45,11 @@
     "typescript": "~5.1.6"
   },
   "exports": {
-    ".": "./index.js",
-    "./bitsnbytes": "./bitsnbytes/index.js",
-    "./errors": "./errors/index.js",
-    "./http": "./http/index.js",
-    "./lang": "./lang/index.js",
+    "./bitsnbytes": "./dist/bitsnbytes/index.js",
+    "./errors": "./dist/errors/index.js",
+    "./http": "./dist/http/index.js",
+    "./lang": "./dist/lang/index.js",
     "./package.json": "./package.json",
-    "./validator": "./validator/index.js"
+    "./validator": "./dist/validator/index.js"
   }
 }
