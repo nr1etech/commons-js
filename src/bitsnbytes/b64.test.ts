@@ -1,6 +1,4 @@
 import {stob64s} from './b64';
-// eslint-disable-next-line node/no-unpublished-import
-import {expect, test} from 'vitest';
 
 test('Test tob64', () => {
   const str = '"Computer, compute to the last digit the value of pi" -- Spock';

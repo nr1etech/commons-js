@@ -24,8 +24,6 @@ import {
   isBetweenValues,
   isValidString,
 } from './validators';
-// eslint-disable-next-line node/no-unpublished-import
-import {test, expect} from 'vitest';
 
 test('Test isNotNull', () => {
   expect(isNotNull('bar')).toBeTruthy();

@@ -12,8 +12,6 @@ import {
   ValidationError,
 } from './errors';
 import {HttpStatusCode} from '../http';
-// eslint-disable-next-line node/no-unpublished-import
-import {test, expect} from 'vitest';
 
 test('Test isNotFoundError', () => {
   expect(isNotFoundError(undefined)).toBeFalsy();
