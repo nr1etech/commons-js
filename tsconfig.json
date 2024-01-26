@@ -7,7 +7,6 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": []
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.test.ts"]

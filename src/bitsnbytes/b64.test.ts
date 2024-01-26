@@ -1,6 +1,8 @@
 import * as assert from 'assert';
 import {stob64s} from './b64';
-import {test} from 'vitest';
+// eslint-disable-next-line node/no-unpublished-import
+import { expect, test } from "vitest";
+import exp = require("node:constants");
 
 test('Test tob64', () => {
   const str = '"Computer, compute to the last digit the value of pi" -- Spock';
@@ -18,7 +20,7 @@ test('Test tob64', () => {
     'IkNvbXB1dGVyLCBjb21wdXRlIHRvIHRoZSBsYXN0IGRpZ2l0IHRoZSB2YWx1ZSBvZiBwaQ==',
   ];
   for (let i = 0; i < b64s.length; i++) {
-    assert.equal(b64s[i], stob64s(str.substring(0, str.length - i)));
+    expect(b64s[i]).toBe(stob64s(str.substring(0, str.length - i)));
   }
 
   // Test URL modified base64 encoding
@@ -36,10 +38,7 @@ test('Test tob64', () => {
     'IkNvbXB1dGVyLCBjb21wdXRlIHRvIHRoZSBsYXN0IGRpZ2l0IHRoZSB2YWx1ZSBvZiBwaQ',
   ];
   for (let i = 0; i < b64s.length; i++) {
-    assert.equal(
-      b64s[i],
-      stob64s(str.substring(0, str.length - i), {b64chars: 'url'})
-    );
+    expect(b64s[i]).toBe(stob64s(str.substring(0, str.length - i), {b64chars: 'url'}));
   }
 
   // Test YUI modified base64 encoding
@@ -57,9 +56,6 @@ test('Test tob64', () => {
     'IkNvbXB1dGVyLCBjb21wdXRlIHRvIHRoZSBsYXN0IGRpZ2l0IHRoZSB2YWx1ZSBvZiBwaQ--',
   ];
   for (let i = 0; i < b64s.length; i++) {
-    assert.equal(
-      b64s[i],
-      stob64s(str.substring(0, str.length - i), {b64chars: 'yui'})
-    );
+    expect(b64s[i]).toBe(stob64s(str.substring(0, str.length - i), {b64chars: 'yui'}));
   }
 });
