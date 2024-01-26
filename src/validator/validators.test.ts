@@ -24,6 +24,7 @@ import {
   isBetweenValues,
   isValidString,
 } from './validators';
+import {test, expect} from 'vitest';
 
 test('Test isNotNull', () => {
   expect(isNotNull('bar')).toBeTruthy();

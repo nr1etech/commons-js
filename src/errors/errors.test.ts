@@ -12,6 +12,7 @@ import {
   ValidationError,
 } from './errors';
 import {HttpStatusCode} from '../http';
+import {test, expect} from 'vitest';
 
 test('Test isNotFoundError', () => {
   expect(isNotFoundError(undefined)).toBeFalsy();

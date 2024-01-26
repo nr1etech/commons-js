@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import {stob64s} from './b64';
+import {test} from 'vitest';
 
 test('Test tob64', () => {
   const str = '"Computer, compute to the last digit the value of pi" -- Spock';
