@@ -1,4 +1,4 @@
-import {IllegalArgumentError} from '../errors';
+import {IllegalArgumentError} from '../errors/errors.js';
 
 // eslint-disable-next-line node/no-unsupported-features/node-builtins
 const encoder = new TextEncoder();

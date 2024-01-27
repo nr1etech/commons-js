@@ -1,4 +1,4 @@
-import {ValidationError} from '../errors';
+import {ValidationError} from '../errors/index.js';
 
 /**
  * Tests if a value is null or undefined.

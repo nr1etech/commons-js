@@ -23,7 +23,7 @@ import {
   isMaxValue,
   isBetweenValues,
   isValidString,
-} from './validators';
+} from './validators.js';
 
 test('Test isNotNull', () => {
   expect(isNotNull('bar')).toBeTruthy();

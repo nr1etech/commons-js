@@ -1,1 +1,1 @@
-export * from './b64';
+export * from './b64.js';

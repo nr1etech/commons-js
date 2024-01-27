@@ -10,8 +10,8 @@ import {
   NotFoundError,
   toError,
   ValidationError,
-} from './errors';
-import {HttpStatusCode} from '../http';
+} from './errors.js';
+import {HttpStatusCode} from '../http/index.js';
 
 test('Test isNotFoundError', () => {
   expect(isNotFoundError(undefined)).toBeFalsy();

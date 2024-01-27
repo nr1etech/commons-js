@@ -1,2 +1,2 @@
-export * from './http-status-code';
-export * from './http-method';
+export * from './http-status-code.js';
+export * from './http-method.js';

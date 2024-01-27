@@ -1,4 +1,4 @@
-import {stob64s} from './b64';
+import {stob64s} from './b64.js';
 
 test('Test tob64', () => {
   const str = '"Computer, compute to the last digit the value of pi" -- Spock';

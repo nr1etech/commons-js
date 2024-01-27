@@ -1,2 +1,2 @@
-export * from './type-functions';
-export * from './sleep';
+export * from './type-functions.js';
+export * from './sleep.js';
