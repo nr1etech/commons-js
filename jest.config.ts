@@ -16,6 +16,7 @@ const jestConfig: JestConfigWithTsJest = {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
+        tsconfig: 'tsconfig.test.json',
         useESM: true,
       },
     ],

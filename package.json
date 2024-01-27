@@ -58,5 +58,8 @@
     "./validator": {
       "import": "./validator/index.js"
     }
+  },
+  "dependencies": {
+    "tslib": "^2.6.2"
   }
 }
