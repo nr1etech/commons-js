@@ -40,25 +40,30 @@
     "typedoc": "^0.25.6",
     "typescript": "~5.1.6"
   },
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
   "exports": {
     "./bitsnbytes": {
-      "import": "./bitsnbytes/index.js"
+      "import": "./bitsnbytes/index.js",
+      "types": "./bitsnbytes/index.d.ts"
     },
     "./errors": {
-      "import": "./errors/index.js"
+      "import": "./errors/index.js",
+      "types": "./errors/index.d.ts"
     },
     "./http": {
-      "import": "./http/index.js"
+      "import": "./http/index.js",
+      "types": "./http/index.d.ts"
     },
     "./lang": {
-      "import": "./lang/index.js"
+      "import": "./lang/index.js",
+      "types": "./lang/index.d.ts"
     },
     "./package.json": "./package.json",
     "./validator": {
-      "import": "./validator/index.js"
+      "import": "./validator/index.js",
+      "types": "./validator/index.d.ts"
     }
-  },
-  "dependencies": {
-    "tslib": "^2.6.2"
   }
 }
