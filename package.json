@@ -1,7 +1,7 @@
 {
   "name": "@nr1e/commons",
   "description": "Provides common patterns for validation",
-  "version": "0.0.3-alpha.21",
+  "version": "0.0.3-alpha.22",
   "type": "module",
   "author": "NR1E, Inc.",
   "publishConfig": {
