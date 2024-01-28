@@ -9,6 +9,7 @@ node_modules
 dist
 ncryptyr.json
 !.prettierrc.js
+site
 coverage
 
 
