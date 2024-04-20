@@ -1,4 +1,5 @@
-import {stob64s} from './b64.js';
+import {stob64s, tob64s} from './b64.js';
+import * as crypto from 'crypto';
 
 test('Test tob64', () => {
   const str = '"Computer, compute to the last digit the value of pi" -- Spock';
@@ -57,5 +58,20 @@ test('Test tob64', () => {
     expect(b64s[i]).toBe(
       stob64s(str.substring(0, str.length - i), {b64chars: 'yui'})
     );
+  }
+});
+
+test('Compare to Node', () => {
+  for (let i = 0; i < 100; i++) {
+    const bytes = crypto.randomBytes(16);
+    const str = tob64s(bytes, {b64chars: 'url'});
+    const nodeStr = bytes.toString('base64url');
+    expect(str).toEqual(nodeStr);
+  }
+  for (let i = 0; i < 100; i++) {
+    const bytes = crypto.randomBytes(16);
+    const str = tob64s(bytes, {b64chars: 'b64'});
+    const nodeStr = bytes.toString('base64');
+    expect(str).toEqual(nodeStr);
   }
 });

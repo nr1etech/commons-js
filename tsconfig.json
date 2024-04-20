@@ -11,7 +11,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": ["jest"]
+    "types": ["jest", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

@@ -60,6 +60,10 @@
       "import": "./lang/index.js",
       "types": "./lang/index.d.ts"
     },
+    "./oauth": {
+      "import": "./oauth/index.js",
+      "types": "./oauth/index.d.ts"
+    },
     "./package.json": "./package.json",
     "./validator": {
       "import": "./validator/index.js",
