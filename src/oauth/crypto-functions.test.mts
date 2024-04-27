@@ -1,8 +1,9 @@
+import {test, expect} from 'vitest';
 import {
   generateNonce,
   generateSecret,
   generateState,
-} from './crypto-functions.js';
+} from './crypto-functions.mjs';
 
 test('Test generateState', () => {
   const state = generateState();

@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import {tob64s} from '../bitsnbytes/index.js';
+import {tob64s} from '../bitsnbytes/index.mjs';
 
 /**
  * Generates a state string for use with OAuth2.0 authorization requests.

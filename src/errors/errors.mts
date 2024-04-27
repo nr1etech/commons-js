@@ -1,5 +1,5 @@
-import {HttpStatusCode} from '../http/index.js';
-import {isError, isObject} from '../lang/index.js';
+import {HttpStatusCode} from '../http/index.mjs';
+import {isError, isObject} from '../lang/index.mjs';
 
 /**
  * An extended version of Error that includes an HttpStatusCode.

@@ -1,3 +1,4 @@
+import {test, expect} from 'vitest';
 import {
   BadRequestError,
   ForbiddenError,
@@ -10,8 +11,8 @@ import {
   NotFoundError,
   toError,
   ValidationError,
-} from './errors.js';
-import {HttpStatusCode} from '../http/index.js';
+} from './errors.mjs';
+import {HttpStatusCode} from '../http/index.mjs';
 
 test('Test isNotFoundError', () => {
   expect(isNotFoundError(undefined)).toBeFalsy();

@@ -1,3 +1,4 @@
+import {test, expect} from 'vitest';
 import {
   betweenValues,
   email,
@@ -23,7 +24,7 @@ import {
   isMaxValue,
   isBetweenValues,
   isValidString,
-} from './validators.js';
+} from './validators.mjs';
 
 test('Test isNotNull', () => {
   expect(isNotNull('bar')).toBeTruthy();

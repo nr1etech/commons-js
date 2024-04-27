@@ -1,4 +1,5 @@
-import {stob64s, tob64s} from './b64.js';
+import {test, expect} from 'vitest';
+import {stob64s, tob64s} from './b64.mjs';
 import * as crypto from 'crypto';
 
 test('Test tob64', () => {
