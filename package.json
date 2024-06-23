@@ -27,7 +27,7 @@
     "lint": "gts lint",
     "clean": "rm -rf dist && rm -rf site && rm -rf coverage",
     "fix": "gts fix",
-    "makepretty": "prettier --write .",
+    "fmt": "prettier --write .",
     "site": "typedoc --out site \"src/**/*.mts\" --exclude \"src/**/*.test.*\""
   },
   "devDependencies": {
