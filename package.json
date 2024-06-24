@@ -31,7 +31,7 @@
     "site": "typedoc --out site \"src/**/*.mts\" --exclude \"src/**/*.test.*\""
   },
   "devDependencies": {
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.8",
     "@vitest/coverage-v8": "^1.6.0",
     "gts": "^5.3.1",
     "ts-node": "^10.9.2",
