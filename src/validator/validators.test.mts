@@ -35,10 +35,10 @@ test('Test isNotNull', () => {
 test('Test notNull', () => {
   notNull('foo', 'bar');
   expect(() => notNull('foo', null)).toThrow(
-    'foo may not be null or undefined'
+    'foo may not be null or undefined',
   );
   expect(() => notNull('foo', undefined)).toThrow(
-    'foo may not be null or undefined'
+    'foo may not be null or undefined',
   );
 });
 
@@ -98,7 +98,7 @@ test('Test email', () => {
   email('foo', null);
   email('foo', undefined);
   expect(() => email('foo', 'test')).toThrow(
-    'foo is not a valid email address'
+    'foo is not a valid email address',
   );
 });
 
@@ -121,10 +121,10 @@ test('Test maxLength', () => {
   maxLength('foo', 3, undefined);
   maxLength('foo', 3, arr);
   expect(() => maxLength('foo', 2, 'baz')).toThrow(
-    'length of foo may not exceed 2'
+    'length of foo may not exceed 2',
   );
   expect(() => maxLength('foo', 2, arr)).toThrow(
-    'length of foo may not exceed 2'
+    'length of foo may not exceed 2',
   );
 });
 
@@ -147,10 +147,10 @@ test('Test minLength', () => {
   minLength('foo', 3, undefined);
   minLength('foo', 3, arr);
   expect(() => minLength('foo', 4, 'baz')).toThrow(
-    'length of foo may not be less than 4'
+    'length of foo may not be less than 4',
   );
   expect(() => minLength('foo', 4, arr)).toThrow(
-    'length of foo may not be less than 4'
+    'length of foo may not be less than 4',
   );
 });
 
@@ -216,7 +216,7 @@ test('Test betweenValues', () => {
   betweenValues('foo', 1, 3, null);
   betweenValues('foo', 1, 3, undefined);
   expect(() => betweenValues('foo', 1, 3, 4)).toThrow(
-    'foo must be between 1 and 3'
+    'foo must be between 1 and 3',
   );
 });
 
@@ -237,9 +237,9 @@ test('Test validString', () => {
   validString('foo', {required: false}, null);
   validString('foo', {required: false}, undefined);
   expect(() => validString('foo', {required: true}, null)).toThrow(
-    'foo may not be null or undefined'
+    'foo may not be null or undefined',
   );
   expect(() => validString('foo', {required: true}, undefined)).toThrow(
-    'foo may not be null or undefined'
+    'foo may not be null or undefined',
   );
 });

@@ -18,7 +18,7 @@ export function isNotNull(o?: unknown): o is NonNullable<unknown> {
  */
 export function notNull(
   name: string,
-  o?: unknown
+  o?: unknown,
 ): asserts o is NonNullable<unknown> {
   if (!isNotNull(o)) {
     throw new ValidationError(`${name} may not be null or undefined`);
@@ -43,7 +43,7 @@ export function isNotEmpty(o?: unknown): o is NonNullable<unknown> {
  */
 export function notEmpty(
   name: string,
-  o?: unknown
+  o?: unknown,
 ): asserts o is NonNullable<unknown> {
   if (!isNotEmpty(o)) {
     throw new ValidationError(`${name} may not be empty`);
@@ -68,7 +68,7 @@ export function isNotBlank(o?: unknown): o is NonNullable<unknown> {
  */
 export function notBlank(
   name: string,
-  o?: unknown
+  o?: unknown,
 ): asserts o is NonNullable<unknown> {
   if (!isNotBlank(o)) {
     throw new ValidationError(`${name} may not be blank`);
@@ -150,7 +150,7 @@ export function isMaxLength(length: number, o?: string | unknown[] | null) {
 export function maxLength(
   name: string,
   length: number,
-  o?: string | unknown[] | null
+  o?: string | unknown[] | null,
 ) {
   if (!isMaxLength(length, o)) {
     throw new ValidationError(`length of ${name} may not exceed ${length}`);
@@ -179,11 +179,11 @@ export function isMinLength(length: number, o?: string | unknown[] | null) {
 export function minLength(
   name: string,
   length: number,
-  o?: string | unknown[] | null
+  o?: string | unknown[] | null,
 ) {
   if (!isMinLength(length, o)) {
     throw new ValidationError(
-      `length of ${name} may not be less than ${length}`
+      `length of ${name} may not be less than ${length}`,
     );
   }
 }
@@ -233,7 +233,7 @@ export function isMinValue(minValue: number, o?: string | number | null) {
 export function minValue(
   name: string,
   minValue: number,
-  o?: number | string | null
+  o?: number | string | null,
 ) {
   if (!isMinValue(minValue, o)) {
     throw new ValidationError(`${name} may not be less than ${minValue}`);
@@ -249,7 +249,7 @@ export function minValue(
  */
 export function isMaxValue(
   maxValue: number,
-  o?: string | number | null
+  o?: string | number | null,
 ): boolean {
   return !(o !== undefined && o !== null && +o > maxValue);
 }
@@ -265,7 +265,7 @@ export function isMaxValue(
 export function maxValue(
   name: string,
   maxValue: number,
-  o?: number | string | null
+  o?: number | string | null,
 ) {
   if (!isMaxValue(maxValue, o)) {
     throw new ValidationError(`${name} may not be greater than ${maxValue}`);
@@ -283,7 +283,7 @@ export function maxValue(
 export function isBetweenValues(
   minValue: number,
   maxValue: number,
-  o?: string | number | null
+  o?: string | number | null,
 ): boolean {
   return !(o !== undefined && o !== null && (+o < minValue || +o > maxValue));
 }
@@ -301,11 +301,11 @@ export function betweenValues(
   name: string,
   minValue: number,
   maxValue: number,
-  o?: string | number | null
+  o?: string | number | null,
 ) {
   if (!isBetweenValues(minValue, maxValue, o)) {
     throw new ValidationError(
-      `${name} must be between ${minValue} and ${maxValue}`
+      `${name} must be between ${minValue} and ${maxValue}`,
     );
   }
 }
@@ -325,7 +325,7 @@ export interface StringValidationOptions {
 
 export function isValidString(
   options: StringValidationOptions,
-  value?: unknown
+  value?: unknown,
 ): value is string {
   if (options.required) {
     if (!isNotNull(value)) {
@@ -364,7 +364,7 @@ export function isValidString(
 export function validString(
   name: string,
   options: StringValidationOptions,
-  value?: unknown
+  value?: unknown,
 ): void {
   if (options.required) {
     notNull(name, value);
@@ -374,11 +374,11 @@ export function validString(
   if (!isString(value)) {
     throw new ValidationError(`${name} must be a string`);
   }
-  options.minLength && minLength(name, options.minLength, value);
-  options.maxLength && maxLength(name, options.maxLength, value);
-  options.regex && match(name, options.regex, value);
-  options.notBlank && notBlank(name, value);
-  options.notEmpty && notEmpty(name, value);
-  options.email && email(name, value);
-  options.number && number(name, value);
+  if (options.minLength) minLength(name, options.minLength, value);
+  if (options.maxLength) maxLength(name, options.maxLength, value);
+  if (options.regex) match(name, options.regex, value);
+  if (options.notBlank) notBlank(name, value);
+  if (options.notEmpty) notEmpty(name, value);
+  if (options.email) email(name, value);
+  if (options.number) number(name, value);
 }

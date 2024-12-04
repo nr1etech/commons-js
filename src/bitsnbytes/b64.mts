@@ -1,8 +1,6 @@
 import {IllegalArgumentError} from '../errors/errors.mjs';
 
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
 const encoder = new TextEncoder();
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
 const decoder = new TextDecoder();
 
 export const BASE64_CHARS: Uint8Array = new Uint8Array([
@@ -65,7 +63,7 @@ export function b64Charset(b64chars?: Uint8Array | Base64CharSet): Uint8Array {
     if (b64chars.length !== 65 && b64chars.length !== 64) {
       throw new IllegalArgumentError(
         'b64chars',
-        'Base 64 character sets must be 64 or 65 characters.'
+        'Base 64 character sets must be 64 or 65 characters.',
       );
     }
     return b64chars;
@@ -80,7 +78,7 @@ export function b64Charset(b64chars?: Uint8Array | Base64CharSet): Uint8Array {
     default:
       throw new IllegalArgumentError(
         'b64chars',
-        `Invalid base64 character set '${b64chars}'`
+        `Invalid base64 character set '${b64chars}'`,
       );
   }
 }

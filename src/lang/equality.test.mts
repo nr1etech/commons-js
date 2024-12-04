@@ -1,10 +1,12 @@
 import {test, expect} from 'vitest';
-import { deepEquals } from "./equality.mjs";
+import {deepEquals} from './equality.mjs';
 
 test('Test deepEquals', () => {
   expect(deepEquals('bar', 'bar')).toBeTruthy();
   expect(deepEquals('bar', 'baz')).toBeFalsy();
-  expect(deepEquals({bar: 'baz', foo: 'bar'}, {foo: 'bar', bar: 'baz'})).toBeTruthy();
+  expect(
+    deepEquals({bar: 'baz', foo: 'bar'}, {foo: 'bar', bar: 'baz'}),
+  ).toBeTruthy();
   expect(deepEquals('bar', 'baz')).toBeFalsy();
   expect(deepEquals(['bar', 'baz'], ['baz', 'bar'])).toBeFalsy();
   expect(deepEquals(['bar', 'baz'], ['bar', 'baz', 'foo'])).toBeFalsy();
@@ -12,4 +14,4 @@ test('Test deepEquals', () => {
   expect(deepEquals('bar', null)).toBeFalsy();
   expect(deepEquals(undefined, 'bar')).toBeFalsy();
   expect(deepEquals(null, 'baz')).toBeFalsy();
-})
+});

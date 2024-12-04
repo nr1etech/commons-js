@@ -52,23 +52,23 @@ test('Test isInternalServerError', () => {
   expect(isInternalServerError({})).toBeFalsy();
   expect(isInternalServerError(new NotFoundError('just a test'))).toBeFalsy();
   expect(
-    isInternalServerError(new InternalServerError('just a test'))
+    isInternalServerError(new InternalServerError('just a test')),
   ).toBeTruthy();
 });
 
 test('Test toError', () => {
   expect(
-    isNotFoundError(toError(HttpStatusCode.NOT_FOUND, 'some message'))
+    isNotFoundError(toError(HttpStatusCode.NOT_FOUND, 'some message')),
   ).toBeTruthy();
   expect(
-    isForbiddenError(toError(HttpStatusCode.FORBIDDEN, 'some message'))
+    isForbiddenError(toError(HttpStatusCode.FORBIDDEN, 'some message')),
   ).toBeTruthy();
   expect(
-    isBadRequestError(toError(HttpStatusCode.BAD_REQUEST, 'some message'))
+    isBadRequestError(toError(HttpStatusCode.BAD_REQUEST, 'some message')),
   ).toBeTruthy();
   expect(
     isInternalServerError(
-      toError(HttpStatusCode.INTERNAL_SERVER_ERROR, 'some message')
-    )
+      toError(HttpStatusCode.INTERNAL_SERVER_ERROR, 'some message'),
+    ),
   ).toBeTruthy();
 });

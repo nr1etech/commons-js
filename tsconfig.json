@@ -1,18 +1,23 @@
 {
-  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
-    "importHelpers": true,
     "lib": ["ES2022", "dom"],
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true,
-    "types": ["vitest", "node"]
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "sourceMap": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.test.*"]
+  "exclude": ["node_modules"]
 }

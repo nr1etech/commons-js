@@ -37,7 +37,7 @@ test('Test tob64', () => {
   ];
   for (let i = 0; i < b64s.length; i++) {
     expect(b64s[i]).toBe(
-      stob64s(str.substring(0, str.length - i), {b64chars: 'url'})
+      stob64s(str.substring(0, str.length - i), {b64chars: 'url'}),
     );
   }
 
@@ -57,7 +57,7 @@ test('Test tob64', () => {
   ];
   for (let i = 0; i < b64s.length; i++) {
     expect(b64s[i]).toBe(
-      stob64s(str.substring(0, str.length - i), {b64chars: 'yui'})
+      stob64s(str.substring(0, str.length - i), {b64chars: 'yui'}),
     );
   }
 });

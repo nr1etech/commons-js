@@ -191,7 +191,7 @@ export class UnsupportedMediaTypeError extends Error implements HttpError {
  * @param e The parameter to check
  */
 export function isUnsupportedMediaTypeError(
-  e?: unknown
+  e?: unknown,
 ): e is UnsupportedMediaTypeError {
   return isHttpError(e) && e.name === 'UnsupportedMediaTypeError';
 }
@@ -248,7 +248,7 @@ export function isIllegalArgumentError(e?: unknown): e is IllegalArgumentError {
  */
 export function toError(
   code: number | HttpStatusCode,
-  message?: string
+  message?: string,
 ): Error {
   switch (code) {
     case HttpStatusCode.NOT_FOUND:
